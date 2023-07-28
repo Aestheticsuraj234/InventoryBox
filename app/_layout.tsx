@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import {GlobalContextProvider} from "@/context/GlobalContext"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,11 +47,12 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
+    <GlobalContextProvider>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>
+    </GlobalContextProvider>
   );
 }
