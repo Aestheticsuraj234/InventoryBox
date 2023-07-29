@@ -1,0 +1,98 @@
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { GlobalContext } from '@/context/GlobalContext';
+import BottomSheetModal from '@/components/UI/BottomSheetModal';
+
+type FormItemProps = {
+  label: string;
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+};
+
+const FormItem: React.FC<FormItemProps> = ({ label, placeholder, value, onChangeText }) => {
+  return (
+    <View style={styles.subFormContainer}>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput style={styles.input} placeholder={placeholder} value={value} onChangeText={onChangeText} />
+      <FontAwesome5 name="chevron-right" size={14} color="#61677A" style={styles.icon} />
+    </View>
+  );
+};
+
+const AddItemComponent: React.FC = () => {
+  const { image, setImage, itemNames, setItemNames, itemColor, setItemColor, itemSize, setItemSize, isModalOpen, setIsModalOpen , selectedOption, setSelectedOption } = useContext(GlobalContext);
+
+  const handleSaveItemSize = () => {
+    console.log("itemSize", selectedOption);
+    console.log("itemNames", itemNames);
+    console.log("itemColor", itemColor);
+    console.log("image", image);
+  }
+
+  const toggleModalPopUp = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleSelectItemSize = (size: string) => {
+    if (!selectedOption.includes(size)) {
+      // Add the size to the selectedOption if it's not already selected
+      setSelectedOption([...selectedOption, size]);
+    }
+  }
+
+  const handleRemoveItemSize = (size: any) => {
+    // Remove the size from the selectedOption
+    setSelectedOption((prevSelected:any) => prevSelected.filter((item: any) => item !== size));
+  };
+  
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.imageUploaderContainer}>
+        <FontAwesome5 name="image" size={34} color="black" />
+        <Feather name="upload-cloud" size={24} color="black" style={styles.uploadIcon} />
+      </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.mainFormContainer}>
+          <FormItem label="Item Name" placeholder="Enter Item Name" value={itemNames} onChangeText={setItemNames} />
+          <TouchableOpacity onPress={toggleModalPopUp}>
+            <View style={styles.subFormContainer}>
+              <Text style={styles.label}>Item Size</Text>
+              {Array.isArray(selectedOption) && selectedOption.length > 0 ? (
+                <FlatList
+                  data={selectedOption}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity style={styles.tag} onPress={() => handleRemoveItemSize(item)}>
+                      <Text style={styles.tagText}>{item}</Text>
+                      <FontAwesome5 name="times" size={12} color="white" style={styles.tagCloseIcon} />
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item) => item}
+                  horizontal // Set horizontal to true for a horizontal list
+                  contentContainerStyle={styles.tagContainer}
+                />
+              ) : (
+                <TextInput style={styles.input} placeholder={"Enter Item Size"} />
+              )}
+              <FontAwesome5 name="chevron-right" size={14} color="#61677A" style={styles.icon} />
+            </View>
+          </TouchableOpacity>
+          <FormItem label="Item Color" placeholder="Item Color (Optional)" value={itemColor} onChangeText={setItemColor} />
+          <BottomSheetModal />
+        </View>
+      </ScrollView>
+      <TouchableOpacity style={styles.addItemButton} onPress={handleSaveItemSize}>
+        <Text style={styles.addItemButtonText}>Add Item</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  // Remaining styles are unchanged
+  // ... (same styles as before)
+});
+
+export default AddItemComponent;
