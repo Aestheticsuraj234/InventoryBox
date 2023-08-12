@@ -18,12 +18,12 @@ const stockIconLable = [
 ]
 
 const HomeScreen = () => {
-  const { totalStock , StockInQuantity ,
-    StockOutQuantites } = useContext(GlobalContext);
-  console.log(totalStock)
+  const { totalStock ,    StockInQuantity,
+    StockOutQuantites, } = useContext(GlobalContext);
+ 
+
   const today = new Date();
   const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
-  // const totalStock = 100;
   const stockIn = StockInQuantity;
   const stockOut = StockOutQuantites;
 
@@ -45,10 +45,7 @@ const HomeScreen = () => {
         <CardComponent HeaderText="Add Item🚀" iconsLabels={iconsLabels} />
       </Link>
 
-      {/* Stock-IN / Out card */}
-      <Link href="/StockManagement" style={styles.CardComponentContainer}>
-        <CardComponent HeaderText="Stock-IN / Out" iconsLabels={stockIconLable} />
-      </Link>
+    
 
     </View>
 

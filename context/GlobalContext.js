@@ -51,6 +51,7 @@ export const GlobalContextProvider = ({ children }) => {
 
 
 
+  
   // FUNCTIONS
   // IMAGE PICKER
   const pickImage = async () => {
@@ -77,16 +78,31 @@ export const GlobalContextProvider = ({ children }) => {
       if (itemsData) {
         const parsedItems = JSON.parse(itemsData);
         setItems(parsedItems);
+  
+        const stockInQuantites = await AsyncStorage.getItem("StockInQuantity");
+        const stockOutQuantites = await AsyncStorage.getItem("StockOutQuantites");
+  
+        if (stockInQuantites !== null) {
+          setStockInQuantity(Number(stockInQuantites));
+        }
+  
+        if (stockOutQuantites !== null) {
+          setStockOutQuantites(Number(stockOutQuantites));
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   // Function to save the items to local storage
   const saveItemsToLocalStorage = async () => {
     try {
       await AsyncStorage.setItem('items', JSON.stringify(items));
+      // Save StockInQuantity and StockOutQuantites here
+      await AsyncStorage.setItem('StockInQuantity', StockInQuantity.toString());
+      await AsyncStorage.setItem('StockOutQuantites', StockOutQuantites.toString());
     } catch (error) {
       console.log(error);
     }
@@ -192,6 +208,20 @@ const decrementExistingQuantity = (id) => {
       ToastAndroid.show("Error Deleting Items", ToastAndroid.SHORT);
     }
   };
+  
+  // delete single item FROM THE LOCALSTORAGE
+
+  const deleteItem = async (id) => {
+    try {
+      const newItems = items.filter(item => item.id !== id);
+      setItems(newItems);
+      ToastAndroid.show("Item Deleted Successfully", ToastAndroid.SHORT);
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show("Error Deleting Item", ToastAndroid.SHORT);
+    }
+  }
+  
 
 
 
@@ -242,8 +272,8 @@ const decrementExistingQuantity = (id) => {
         StockInQuantity, setStockInQuantity,
         StockOutQuantites, setStockOutQuantites,
         totalStock,
-        StockInQuantity,
-        StockOutQuantites
+        deleteItem
+    
       }}
     >
       {children}

@@ -17,47 +17,62 @@ type ItemCardType = {
 
   }
 }
-
 const ItemCard = ({ item }: ItemCardType) => {
+  
+  const { deleteItem } = useContext(GlobalContext);
 
   return (
-    <Link href={`/itemDetail/${item.id}`} style={{ margin: 10 }} >
-      <View style={styles.mainItemContainer}>
-        {/* First container */}
-        <TouchableOpacity style={styles.imageContainer}>
-          <Image source={{ uri: item.image }} style={styles.itemImage} />
-        </TouchableOpacity>
+    
+      <Link href={`/itemDetail/${item.id}`} style={{ margin: 10 }}>
+        <View style={styles.mainItemContainer}>
+          {/* First container */}
+          <TouchableOpacity style={styles.imageContainer}>
+            <Image source={{ uri: item.image }} style={styles.itemImage} />
+          </TouchableOpacity>
 
-        {/* Second container */}
-        <View style={styles.middleContainer}>
-          <Text style={styles.title}>{item.itemNames.length > 20 ? `${item.itemNames.slice(0, 20)}...` : item.itemNames}</Text>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>Color: <Text style={styles.infoValue}>{item.itemColor}</Text></Text>
-            <View style={styles.sizeContainer}>
-              <Text style={styles.infoText}>Size:</Text>
-              <View style={styles.tagContainer}>
-                <FlatList
-                  data={item.selectedOption}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.tag} >
-                      <Text style={styles.tagText}>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item}
-                  horizontal // Set horizontal to true for a horizontal list
-                />
+          {/* Second container */}
+          <View style={styles.middleContainer}>
+            <Text style={styles.title}>
+              {item.itemNames.length > 20 ? `${item.itemNames.slice(0, 20)}...` : item.itemNames}
+            </Text>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>
+                Color: <Text style={styles.infoValue}>{item.itemColor}</Text>
+              </Text>
+              <View style={styles.sizeContainer}>
+                <Text style={styles.infoText}>Size:</Text>
+                <View style={styles.tagContainer}>
+                  <FlatList
+                    data={item.selectedOption}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity style={styles.tag}>
+                        <Text style={styles.tagText}>{item}</Text>
+                      </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item}
+                    horizontal
+                  />
+                </View>
               </View>
             </View>
           </View>
+
+          {/* Third container */}
+          <Text style={styles.quantityText}>{item.quantity}</Text>
+          <Pressable style={styles.deleteBtn}>
+            <FontAwesome5
+              name="trash"
+              size={18}
+              color="#27374D"
+              onPress={() => deleteItem(item.id)}
+            />
+          </Pressable>
         </View>
-
-
-        {/* Third container */}
-        <Text style={styles.quantityText}>{item.quantity}</Text>
-      </View>
-    </Link>
+      </Link>
+   
   );
 };
+
 
 const ItemsList = () => {
   const { items } = useContext(GlobalContext);
@@ -163,7 +178,19 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Align the main container to the top
     marginBottom: 10,
   },
+  deleteBtn:{
+    position: 'absolute',
+    top: 10,
+    right: 1,
+    width: 30,
+    height: 30,
+    borderRadius: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  
 
+  }
+,
   imageContainer: {
     width: 68.16,
     height: 68.16,
@@ -220,7 +247,7 @@ const styles = StyleSheet.create({
   quantityText: {
     position: 'absolute',
     top: 20,
-    right: 30,
+    right: 40,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#4C87E1',
