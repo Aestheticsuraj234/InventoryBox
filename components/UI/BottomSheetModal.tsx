@@ -141,17 +141,14 @@ const styles = StyleSheet.create({
     color:"black"
   },
   buttonClose: {
-    backgroundColor: '#272829',
+    backgroundColor: '#9288F8',
     position: 'absolute', // Here is the trick
     bottom: 0, // Here is the trick
     left: 80, // Here is the trick
     right: 0, // Here is the trick
     justifyContent: 'center',
     alignItems: 'center',
-    width: '70%',
-    
-    
-
+    width: '70%', 
   },
   textStyle: {
     color: 'white',

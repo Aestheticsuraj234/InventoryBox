@@ -35,7 +35,7 @@ export default function TabLayout() {
         name="items"
         options={{
           headerShown:false,
-          title: 'Items',
+          title: 'ItemDetail',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
@@ -48,6 +48,7 @@ export default function TabLayout() {
           
         }}
       />
+      
     </Tabs>
   );
 }

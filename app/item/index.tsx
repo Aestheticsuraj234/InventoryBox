@@ -5,8 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { GlobalContext } from '@/context/GlobalContext';
 
-
-type ItemCardType = {
+type ItemCardType={
   item: {
     id: string;
     itemNames: string;
@@ -18,50 +17,50 @@ type ItemCardType = {
   }
 }
 
-const ItemCard = ({ item }: ItemCardType) => {
-
+const ItemCard = ({ item }:ItemCardType) => {
+  
   return (
-    <Link href={`/itemDetail/${item.id}`} style={{ margin: 10 }} >
-      <View style={styles.mainItemContainer}>
-        {/* First container */}
-        <TouchableOpacity style={styles.imageContainer}>
-          <Image source={{ uri: item.image }} style={styles.itemImage} />
-        </TouchableOpacity>
+    <Link   href={"/(tabs)/items"} style={{margin:10}}>
+    <View   style={styles.mainItemContainer}>
+      {/* First container */}
+      <TouchableOpacity style={styles.imageContainer}>
+        <Image source={{ uri: item.image }} style={styles.itemImage} />
+      </TouchableOpacity>
 
-        {/* Second container */}
-        <View style={styles.middleContainer}>
-          <Text style={styles.title}>{item.itemNames.length > 20 ? `${item.itemNames.slice(0, 20)}...` : item.itemNames}</Text>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>Color: <Text style={styles.infoValue}>{item.itemColor}</Text></Text>
-            <View style={styles.sizeContainer}>
-              <Text style={styles.infoText}>Size:</Text>
-              <View style={styles.tagContainer}>
-                <FlatList
-                  data={item.selectedOption}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.tag} >
-                      <Text style={styles.tagText}>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item}
-                  horizontal // Set horizontal to true for a horizontal list
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-
-
-        {/* Third container */}
-        <Text style={styles.quantityText}>{item.quantity}</Text>
+      {/* Second container */}
+      <View style={styles.middleContainer}>
+  <Text style={styles.title}>{item.itemNames.length > 20 ? `${item.itemNames.slice(0, 20)}...` : item.itemNames}</Text>
+  <View style={styles.infoContainer}>
+    <Text style={styles.infoText}>Color: <Text style={styles.infoValue}>{item.itemColor}</Text></Text>
+    <View style={styles.sizeContainer}>
+      <Text style={styles.infoText}>Size:</Text>
+      <View style={styles.tagContainer}>
+        <FlatList
+          data={item.selectedOption}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.tag} >
+              <Text style={styles.tagText}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+          horizontal // Set horizontal to true for a horizontal list
+        />
       </View>
+    </View>
+  </View>
+</View>
+
+
+      {/* Third container */}
+      <Text style={styles.quantityText}>{item.quantity}</Text>
+    </View>
     </Link>
   );
 };
 
 const ItemsList = () => {
   const { items } = useContext(GlobalContext);
-  console.log(items)
+console.log(items)
   return (
     <View style={styles.container}>
       <View style={styles.topHeaderFilterContainer}>
@@ -84,15 +83,15 @@ const ItemsList = () => {
           alignItems: 'center',
 
         }}>
-
-          <FlatList
-            data={items}
-            renderItem={({ item }) => <ItemCard item={item} />}
-            keyExtractor={(item) => item.id}
-            style={styles.itemList}
-            contentContainerStyle={styles.itemListContent}
-          />
-        </View>
+        
+        <FlatList
+          data={items}
+          renderItem={({ item }) => <ItemCard item={item} />}
+          keyExtractor={(item) => item.id} 
+          style={styles.itemList}
+          contentContainerStyle={styles.itemListContent}
+        />
+          </View>
       )}
 
       <Link href={"/AddItem"} style={styles.addBtnContainer}>
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Align the main container to the top
     marginBottom: 10,
   },
-
+  
   imageContainer: {
     width: 68.16,
     height: 68.16,
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Align items to the left
     marginLeft: 10,
     marginRight: 10,
-
+    
   },
   title: {
     fontSize: 14,
@@ -192,13 +191,13 @@ const styles = StyleSheet.create({
     textAlign: "left", // Align the title text to the left
     alignSelf: 'flex-start', // Align the title itself to the left within its container
   },
-
-  tagContainer: {
-    width: 80,
-    flexDirection: 'row',
-    marginTop: 2,
-
-
+  
+  tagContainer:{
+    width:80,
+      flexDirection: 'row',
+      marginTop: 2,
+      
+      
   },
   tag: {
     backgroundColor: '#CBFFA9',
@@ -210,13 +209,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-  },
-  tagText: {
+},
+tagText: {
     color: '#61677A',
     marginRight: 6,
     fontSize: 9,
     fontWeight: 'bold',
-  },
+},
   quantityText: {
     position: 'absolute',
     top: 20,
@@ -232,26 +231,25 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   itemListContent: {
-    paddingBottom: 20,
+    paddingBottom: 20,    
   },
   itemImage: {
     width: 68.16,
     height: 68.16,
     borderRadius: 11.36,
   },
-  infoContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10
-  },
+  infoContainer: { 
+    flex: 1, 
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "center", 
+    gap: 10 },
   infoText: {
-    fontSize: 14, fontWeight: "600"
+     fontSize: 14, fontWeight: "600" 
   },
   infoValue: {
-    fontWeight: "700",
-    color: "#9288F8"
+     fontWeight: "700" ,
+     color: "#9288F8"
   },
   sizeContainer: {
     display: "flex",
