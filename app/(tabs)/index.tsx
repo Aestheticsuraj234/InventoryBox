@@ -3,7 +3,10 @@ import React from 'react'
 import Header from '@/components/UI/Header'
 import StockStatusCard from '@/components/UI/StockStatusCard'
 import CardComponent from '@/components/UI/CardComponent'
-import { Link } from 'expo-router'
+import { Link } from 'expo-router';
+import { GlobalContext } from '@/context/GlobalContext'
+import { useContext } from 'react';
+
 
 const iconsLabels = [
   { name: 'archive', label: 'Register new items', color: '#FFD95A' },
@@ -15,6 +18,15 @@ const stockIconLable = [
 ]
 
 const HomeScreen = () => {
+  const { totalStock , StockInQuantity ,
+    StockOutQuantites } = useContext(GlobalContext);
+  console.log(totalStock)
+  const today = new Date();
+  const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+  // const totalStock = 100;
+  const stockIn = StockInQuantity;
+  const stockOut = StockOutQuantites;
+
   return (
 
     <View style={styles.HomeMainContainer}>
@@ -25,7 +37,8 @@ const HomeScreen = () => {
 
       {/* Stock Status card */}
 
-      <StockStatusCard Moment="Today" Date="28/7/2023" TotalStock={100} StockIn={50} StockOut={50} />
+      <StockStatusCard Moment="Today" Date={formattedDate} TotalStock={totalStock} StockIn={stockIn} StockOut={stockOut} />
+
       {/* Add Item card */}
 
       <Link href="/items" style={styles.CardComponentContainer} >

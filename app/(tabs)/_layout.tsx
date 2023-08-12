@@ -38,17 +38,7 @@ export default function TabLayout() {
           title: 'ItemDetail',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
-      />
-
-      <Tabs.Screen
-        name="StockManagement"
-        options={{
-          title: 'Stock-in/out',
-          tabBarIcon: ({ color }) => <TabBarIcon name="box" color={color} />,
-          
-        }}
-      />
-      
+      />      
     </Tabs>
   );
 }

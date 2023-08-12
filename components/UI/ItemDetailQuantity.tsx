@@ -13,12 +13,13 @@ const ItemDetailQuantity = ({ ID }: any) => {
         isQuantityModalOpen,
         setIsQuantityModalOpen,
         updateExistingQuantity,
+        StockInQuantity, setStockInQuantity
 
     } = useContext(GlobalContext);
 
     const item = items.find((t: any) => t.id === ID);
     console.log("ItemDetailAdd:", item)
-    const [StockInQuantity, setStockInQuantity] = useState(0); // Initialize with item's initial quantity
+
 
 
     const handleIncrement = () => {

@@ -19,6 +19,8 @@ export const GlobalContextProvider = ({ children }) => {
   const [isStockOutModalOpen, setIsStockOutModalOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [isStockInOut , setIsStockInOut] = useState(false);
+  const [StockInQuantity, setStockInQuantity] = useState(0); 
+  const [StockOutQuantites, setStockOutQuantites] = useState(0);
 
   // USE EFFECTS
   useEffect(() => {
@@ -43,8 +45,11 @@ export const GlobalContextProvider = ({ children }) => {
   }, [items]);
 
 
+  // FUNCTIONS TO  CALCULATE STOCK QUANTITIES FOR TODAY  AND ALSO TOTAL NUMBER OF STOCK WE HAVE OVERALL
+  const totalStock = items.reduce((total, item) => total + item.quantity, 0);
   
-  
+
+
 
   // FUNCTIONS
   // IMAGE PICKER
@@ -232,7 +237,13 @@ const decrementExistingQuantity = (id) => {
         updateExistingQuantity,
         stockOutIncrement,
         stockOutDecrement,
-        StockOutQuantity
+        StockOutQuantity,
+
+        StockInQuantity, setStockInQuantity,
+        StockOutQuantites, setStockOutQuantites,
+        totalStock,
+        StockInQuantity,
+        StockOutQuantites
       }}
     >
       {children}

@@ -1,29 +1,30 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, Pressable, Modal, TextInput, ToastAndroid , StyleSheet } from 'react-native';
+import { Text, View, Pressable, Modal, TextInput, ToastAndroid, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { GlobalContext } from '@/context/GlobalContext';
 
 
-const StockOutItem = ({ ID }:any) => {
+const StockOutItem = ({ ID }: any) => {
     const {
         items,
         isStockOutModalOpen,
         setIsStockOutModalOpen,
-        StockOutQuantity
+        StockOutQuantity,
+        StockOutQuantites, setStockOutQuantites
     } = useContext(GlobalContext);
 
-    const item = items.find((t:any) => t.id === ID);
-    const [StockOutQuantites, setStockOutQuantites] = useState(0);
+    const item = items.find((t: any) => t.id === ID);
+
 
     const handleIncrement = () => {
-        setStockOutQuantites(prevQuantity => prevQuantity + 1);
+        setStockOutQuantites((prevQuantity: number) => prevQuantity + 1);
     };
 
-    const handleDecrement = () => {
+    function handleDecrement() {
         if (StockOutQuantites > 0) {
-            setStockOutQuantites(prevQuantity => prevQuantity - 1);
+            setStockOutQuantites((prevQuantity: number) => prevQuantity - 1);
         }
-    };
+    }
 
     const handleApply = () => {
         if (StockOutQuantites <= item.quantity) { // Make sure stock doesn't go negative
@@ -67,7 +68,7 @@ const StockOutItem = ({ ID }:any) => {
                                 <AntDesign name="plus" size={24} color="#175CFC" />
                             </Pressable>
                         </View>
-                        
+
                         <View style={styles.subMiddelContainer}>
                             <Text style={styles.middleSubSectiontext}>{item?.quantity}</Text>
                             <AntDesign name="arrowright" size={24} color="black" />
